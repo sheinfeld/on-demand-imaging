@@ -13,11 +13,11 @@ class ImageController extends Controller
         try {
             $request->validate([
                 'url' => 'required|string',
-                'format' => 'required|string',
+                'format' => 'nullable|string',
             ]);
 
             $image = file_get_contents(urldecode($request->get('url')));
-            return Image::make($image)->encode($request->get('format'))->response();
+            return Image::make($image)->encode($request->get('format', 'jpeg'))->response();
 
         } catch (\Throwable $th) {
             abort(500, $th->getMessage());
