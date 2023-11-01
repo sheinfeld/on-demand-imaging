@@ -16,7 +16,7 @@ class ImageController extends Controller
                 'format' => 'required|string',
             ]);
 
-            $image = file_get_contents($request->get('url'));
+            $image = file_get_contents(urldecode($request->get('url')));
             return Image::make($image)->encode($request->get('format'))->response();
 
         } catch (\Throwable $th) {
